@@ -1,11 +1,17 @@
 const express = require("express");
-const app = express();
-app.use(express.json());
-const cors = require("cors");
-app.use(cors());
+const dotenv = require("dotenv");
+const app = require("./route.js");
+const DBConnection = require("./db/config.js")
 
-const groceryController = require("./controllers/grocery.controller");
+dotenv.config();
 
-app.use("/inventory", groceryController);
+const port = process.env.PORT || 9000;
 
-module.exports = app;
+app.get('/check',(req,res)=>{
+    return "Hello"
+})
+
+app.listen(port,async()=>{
+    await DBConnection();
+console.log(`Server is running at port ${port}`);
+})
